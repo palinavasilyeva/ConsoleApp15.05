@@ -2,9 +2,12 @@
 
 var query = s.Split(',', StringSplitOptions.RemoveEmptyEntries)
     .Select(ss => ss.Split(' ', StringSplitOptions.RemoveEmptyEntries))
-    .Select(tab => (tab[1], tab[0]))
-    .Select(para => para.Item1 + " " + para.Item2)
-    .Order();
+    .Select(tab => (nazwisko: tab[1], imie: tab[0]))
+    .OrderBy(para => para.nazwisko)
+    .ThenBy(para => para.imie)
+    .Select(para => $"{para.nazwisko} {para.imie}");
+//.Select(para => para.Item1 + " " + para.Item2)
+//.Order();
 var wynik = string.Join(", ", query);
 Console.WriteLine(wynik);
 
