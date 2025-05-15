@@ -1,13 +1,21 @@
 ﻿var s = "Krzysztof Molenda, Jan Kowalski, Anna Abacka , Józef Kabacki, Kazimierz Moksa";
 
-var query1 = s.Split(',', StringSplitOptions.RemoveEmptyEntries);
-var query2 = query1.Select(ss => ss.Split(' ', StringSplitOptions.RemoveEmptyEntries));
-var query3 = query2.Select(tab => (tab[1], tab[0]));
-var query4 = query3.Select(para => para.Item1 + " " + para.Item2);
-var query5 = query4.Order();
-
-var wynik = string.Join(", ", query5);
+var query = s.Split(',', StringSplitOptions.RemoveEmptyEntries)
+    .Select(ss => ss.Split(' ', StringSplitOptions.RemoveEmptyEntries))
+    .Select(tab => (tab[1], tab[0]))
+    .Select(para => para.Item1 + " " + para.Item2)
+    .Order();
+var wynik = string.Join(", ", query);
 Console.WriteLine(wynik);
+
+//var query1 = s.Split(',', StringSplitOptions.RemoveEmptyEntries);
+//var query2 = query1.Select(ss => ss.Split(' ', StringSplitOptions.RemoveEmptyEntries));
+//var query3 = query2.Select(tab => (tab[1], tab[0]));
+//var query4 = query3.Select(para => para.Item1 + " " + para.Item2);
+//var query5 = query4.Order();
+
+//var wynik = string.Join(", ", query5);
+//Console.WriteLine(wynik);
 
 //var query1 = s.Split(',', StringSplitOptions.RemoveEmptyEntries);
 
