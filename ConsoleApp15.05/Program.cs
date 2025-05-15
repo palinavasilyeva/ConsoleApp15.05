@@ -1,15 +1,39 @@
-﻿var s = "Krzysztof Molenda, Jan Kowalski, Anna Abacka , Józef Kabacki, Kazimierz Moksa";
+﻿using System;
+using System.Linq;
 
-var query = s.Split(',', StringSplitOptions.RemoveEmptyEntries)
-    .Select(ss => ss.Split(' ', StringSplitOptions.RemoveEmptyEntries))
-    .Select(tab => (nazwisko: tab[1], imie: tab[0]))
-    .OrderBy(para => para.nazwisko)
-    .ThenBy(para => para.imie)
-    .Select(para => $"{para.nazwisko} {para.imie}");
-//.Select(para => para.Item1 + " " + para.Item2)
-//.Order();
-var wynik = string.Join(", ", query);
-Console.WriteLine(wynik);
+public static class Program
+{
+    public static string SortByDateOfBirthThenLastName(string napis)
+    {
+        return string.Join("; ",
+            from entry in napis.Split(';', StringSplitOptions.RemoveEmptyEntries)
+            let parts = entry.Trim().Split(',', StringSplitOptions.RemoveEmptyEntries)
+            let nameParts = parts[0].Split(' ', StringSplitOptions.RemoveEmptyEntries)
+            let dateOfBirth = DateTime.Parse(parts[1].Trim())
+            orderby dateOfBirth, nameParts[1]
+            select $"{nameParts[0]} {nameParts[1]}, {dateOfBirth:yyyy-MM-dd}");
+    }
+
+    public static void Main()
+    {
+        string input = "Krzysztof Molenda, 1965-11-20; Jan Kowalski, 1987-01-01; Anna Abacka, 1972-05-20; Józef Kabacki, 2000-01-02; Kazimierz Moksa, 2001-01-02";
+        string wynik = SortByDateOfBirthThenLastName(input);
+        Console.WriteLine(wynik);
+    }
+}
+
+//var s = "Krzysztof Molenda, Jan Kowalski, Anna Abacka , Józef Kabacki, Kazimierz Moksa";
+
+//var query = s.Split(',', StringSplitOptions.RemoveEmptyEntries)
+//    .Select(ss => ss.Split(' ', StringSplitOptions.RemoveEmptyEntries))
+//    .Select(tab => (nazwisko: tab[1], imie: tab[0]))
+//    .OrderBy(para => para.nazwisko)
+//    .ThenBy(para => para.imie)
+//    .Select(para => $"{para.nazwisko} {para.imie}");
+////.Select(para => para.Item1 + " " + para.Item2)
+////.Order();
+//var wynik = string.Join(", ", query);
+//Console.WriteLine(wynik);
 
 //var query1 = s.Split(',', StringSplitOptions.RemoveEmptyEntries);
 //var query2 = query1.Select(ss => ss.Split(' ', StringSplitOptions.RemoveEmptyEntries));
